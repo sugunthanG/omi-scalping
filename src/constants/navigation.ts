@@ -1,0 +1,271 @@
+import type {
+  LucideIcon,
+} from "lucide-react";
+
+import {
+  Activity,
+  BarChart3,
+  Bell,
+  BrainCircuit,
+  BriefcaseBusiness,
+  ChartCandlestick,
+  CircleUserRound,
+  Code2,
+  Gauge,
+  History,
+  Landmark,
+  LayoutDashboard,
+  ListChecks,
+  Newspaper,
+  Settings,
+  ShieldCheck,
+  SlidersHorizontal,
+  TerminalSquare,
+  Users,
+  WalletCards,
+} from "lucide-react";
+
+
+export type NavigationRole =
+  | "USER"
+  | "DEVELOPER"
+  | "ADMIN";
+
+
+export interface NavigationItem {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  roles: NavigationRole[];
+}
+
+
+export interface NavigationGroup {
+  label: string;
+  items: NavigationItem[];
+}
+
+
+const allRoles: NavigationRole[] = [
+  "USER",
+  "DEVELOPER",
+  "ADMIN",
+];
+
+
+export const navigationGroups: NavigationGroup[] = [
+  // =====================================
+  // OVERVIEW
+  // =====================================
+
+  {
+    label: "Overview",
+
+    items: [
+      {
+        label: "Dashboard",
+        href: "/",
+        icon: LayoutDashboard,
+        roles: allRoles,
+      },
+
+      {
+        label: "Account",
+        href: "/account",
+        icon: Landmark,
+        roles: allRoles,
+      },
+
+      {
+        label: "Live Trading",
+        href: "/live-trading",
+        icon: ChartCandlestick,
+        roles: allRoles,
+      },
+
+      {
+        label: "Open Positions",
+        href: "/positions",
+        icon: BriefcaseBusiness,
+        roles: allRoles,
+      },
+    ],
+  },
+
+  // =====================================
+  // ANALYTICS
+  // =====================================
+
+  {
+    label: "Analytics",
+
+    items: [
+      {
+        label: "Trade History",
+        href: "/history",
+        icon: History,
+        roles: allRoles,
+      },
+
+      {
+        label: "Signal History",
+        href: "/signals",
+        icon: ListChecks,
+        roles: allRoles,
+      },
+
+      {
+        label: "Performance",
+        href: "/performance",
+        icon: BarChart3,
+        roles: allRoles,
+      },
+
+      {
+        label: "Risk Dashboard",
+        href: "/risk",
+        icon: ShieldCheck,
+        roles: allRoles,
+      },
+    ],
+  },
+
+  // =====================================
+  // INTELLIGENCE
+  // =====================================
+
+  {
+    label: "Intelligence",
+
+    items: [
+      {
+        label: "AI Intelligence",
+        href: "/ai-intelligence",
+        icon: BrainCircuit,
+        roles: allRoles,
+      },
+
+      {
+        label: "Market Status",
+        href: "/market-status",
+        icon: Gauge,
+        roles: allRoles,
+      },
+
+      {
+        label: "News",
+        href: "/news",
+        icon: Newspaper,
+        roles: allRoles,
+      },
+    ],
+  },
+
+  // =====================================
+  // SCIENTIST
+  //
+  // Internal role code remains DEVELOPER.
+  // Only the visible interface name is Scientist.
+  // =====================================
+
+  {
+    label: "Scientist",
+
+    items: [
+      {
+        label: "Scientist Console",
+        href: "/developer",
+        icon: Code2,
+        roles: [
+          "DEVELOPER",
+        ],
+      },
+
+      {
+        label: "System Logs",
+        href: "/logs",
+        icon: TerminalSquare,
+        roles: [
+          "DEVELOPER",
+        ],
+      },
+
+      {
+        label: "Service Health",
+        href: "/services",
+        icon: Activity,
+        roles: [
+          "DEVELOPER",
+        ],
+      },
+    ],
+  },
+
+  // =====================================
+  // ADMINISTRATION
+  // =====================================
+
+  {
+    label: "Administration",
+
+    items: [
+      {
+        label: "Trading Settings",
+        href: "/admin/trading",
+        icon: SlidersHorizontal,
+        roles: [
+          "ADMIN",
+        ],
+      },
+
+      {
+        label: "Account Settings",
+        href: "/admin/account",
+        icon: WalletCards,
+        roles: [
+          "ADMIN",
+        ],
+      },
+
+      {
+        label: "User Management",
+        href: "/admin/users",
+        icon: Users,
+        roles: [
+          "ADMIN",
+        ],
+      },
+    ],
+  },
+
+  // =====================================
+  // PERSONAL
+  // =====================================
+
+  {
+    label: "Personal",
+
+    items: [
+      {
+        label: "Notifications",
+        href: "/notifications",
+        icon: Bell,
+        roles: allRoles,
+      },
+
+      {
+        label: "Settings",
+        href: "/settings",
+        icon: Settings,
+        roles: allRoles,
+      },
+
+      {
+        label: "Profile",
+        href: "/profile",
+        icon: CircleUserRound,
+        roles: allRoles,
+      },
+    ],
+  },
+];
