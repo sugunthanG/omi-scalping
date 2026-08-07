@@ -1,5 +1,9 @@
 import axios from "axios";
 
+import {
+  API_BASE_URL,
+} from "@/lib/api-config";
+
 import type {
   LoginRequest,
   LoginResponse,
@@ -7,17 +11,6 @@ import type {
   MeResponse,
   RefreshResponse,
 } from "@/types/auth";
-
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL;
-
-
-if (!API_BASE_URL) {
-  throw new Error(
-    "NEXT_PUBLIC_API_BASE_URL is missing. Configure it in .env.local and Vercel.",
-  );
-}
 
 
 const authClient =

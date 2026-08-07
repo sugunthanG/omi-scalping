@@ -1,30 +1,18 @@
 import axios from "axios";
 
-
-const apiBaseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL;
-
-
-if (!apiBaseUrl) {
-  throw new Error(
-    "NEXT_PUBLIC_API_BASE_URL is not configured.",
-  );
-}
+import {
+  API_BASE_URL,
+} from "@/lib/api-config";
 
 
 export const apiClient =
   axios.create({
-    baseURL:
-      apiBaseUrl,
+    baseURL: API_BASE_URL,
 
-    timeout:
-      15_000,
+    timeout: 15_000,
 
     headers: {
-      "Content-Type":
-        "application/json",
-
-      Accept:
-        "application/json",
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
   });
