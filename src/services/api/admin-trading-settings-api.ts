@@ -1,13 +1,12 @@
 import axios from "axios";
 
 import {
+  API_BASE_URL,
+} from "@/lib/api-config";
+
+import {
   getAccessToken,
 } from "@/lib/auth-token-storage";
-
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL
-  ?? "http://127.0.0.1:9000";
 
 
 export interface AdminTradingSettings {
@@ -51,6 +50,12 @@ function getAuthorizationHeaders() {
   return {
     Authorization:
       `Bearer ${accessToken}`,
+
+    "Content-Type":
+      "application/json",
+
+    Accept:
+      "application/json",
   };
 }
 
@@ -63,6 +68,9 @@ export async function fetchAdminTradingSettings():
       {
         headers:
           getAuthorizationHeaders(),
+
+        timeout:
+          15_000,
       },
     );
 
@@ -76,6 +84,7 @@ export async function updateAdminTradingSettings(
   const response =
     await axios.patch<TradingSettingsResponse>(
       `${API_BASE_URL}/admin/trading-settings`,
+
       {
         lot_size:
           settings.lot_size,
@@ -95,9 +104,13 @@ export async function updateAdminTradingSettings(
         signal_ttl_seconds:
           settings.signal_ttl_seconds,
       },
+
       {
         headers:
           getAuthorizationHeaders(),
+
+        timeout:
+          15_000,
       },
     );
 
