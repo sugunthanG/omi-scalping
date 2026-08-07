@@ -41,3 +41,4 @@ export const queryKeys = {
 
   systemStatus: ["system-status"] as const,
 } as const;
+

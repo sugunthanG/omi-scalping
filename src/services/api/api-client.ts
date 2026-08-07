@@ -1,45 +1,30 @@
 import axios from "axios";
 
-import {
-  normalizeApiError,
-  type OmiApiError,
-} from "@/services/api/api-error";
 
 const apiBaseUrl =
-  process.env.NEXT_PUBLIC_OMI_API_URL?.trim();
+  process.env.NEXT_PUBLIC_API_BASE_URL;
+
 
 if (!apiBaseUrl) {
   throw new Error(
-    "NEXT_PUBLIC_OMI_API_URL is not configured.",
+    "NEXT_PUBLIC_API_BASE_URL is not configured.",
   );
 }
 
-export const apiClient = axios.create({
-  baseURL: apiBaseUrl,
-  timeout: 15_000,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-});
 
-apiClient.interceptors.request.use((config) => {
-  /*
-   * JWT authorization will be attached here after the backend
-   * authentication endpoints are implemented and verified.
-   *
-   * Do not place broker credentials or BRIDGE_SECRET in browser code.
-   */
+export const apiClient =
+  axios.create({
+    baseURL:
+      apiBaseUrl,
 
-  return config;
-});
+    timeout:
+      15_000,
 
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error: unknown) => {
-    const normalizedError: OmiApiError =
-      normalizeApiError(error);
+    headers: {
+      "Content-Type":
+        "application/json",
 
-    return Promise.reject(normalizedError);
-  },
-);
+      Accept:
+        "application/json",
+    },
+  });

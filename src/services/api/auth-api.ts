@@ -15,7 +15,7 @@ const API_BASE_URL =
 
 if (!API_BASE_URL) {
   throw new Error(
-    "NEXT_PUBLIC_API_BASE_URL is not configured.",
+    "NEXT_PUBLIC_API_BASE_URL is missing. Configure it in .env.local and Vercel.",
   );
 }
 
@@ -28,6 +28,7 @@ const authClient =
 
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
   });
 
