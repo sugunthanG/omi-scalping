@@ -64,7 +64,9 @@ export default function ServiceHealthPage() {
       const result =
         await fetchScientistServices();
 
-      setServices(result);
+      setServices(
+        result,
+      );
     } catch (requestError) {
       if (
         axios.isAxiosError(
