@@ -15,6 +15,7 @@ import {
 
 interface UseMarketDataOptions {
   symbol?: string;
+
   timeframe?: string;
 
   refetchInterval?: number;
@@ -26,7 +27,9 @@ export function useMarketData({
   timeframe = "1m",
   refetchInterval = 10_000,
 }: UseMarketDataOptions = {}) {
+
   return useQuery({
+
     queryKey:
       queryKeys.marketData(
         symbol,
@@ -46,5 +49,6 @@ export function useMarketData({
     retry: 2,
 
     refetchOnWindowFocus: true,
+
   });
 }

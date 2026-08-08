@@ -4,12 +4,12 @@ import {
 
 import type {
   MarketCandle,
-  MarketDataResponse,
 } from "@/types/api";
 
 
 interface GetMarketDataOptions {
   symbol?: string;
+
   timeframe?: string;
 }
 
@@ -18,8 +18,9 @@ export async function getMarketData({
   symbol = "XAUUSDm",
   timeframe = "1m",
 }: GetMarketDataOptions = {}): Promise<MarketCandle[]> {
+
   const response =
-    await apiClient.get<MarketDataResponse>(
+    await apiClient.get(
       "/market-data",
       {
         params: {
@@ -34,8 +35,11 @@ export async function getMarketData({
 
   if (
     data.status !== "success"
-    || !Array.isArray(data.data)
+    || !Array.isArray(
+      data.data,
+    )
   ) {
+
     throw new Error(
       data.message
       ?? `Unable to load ${timeframe} market data.`,

@@ -20,31 +20,32 @@ import {
 
 
 export default function MarketStatusPage() {
+
   return (
-    <div className="mx-auto max-w-[1800px]">
+    <>
       <PageHeader
         eyebrow="XAUUSD market intelligence"
         title="Market Status"
-        description="Monitor live bid and ask prices, spread, volatility, tick pressure, M1 and M5 direction, market-data freshness and OMI session rules."
+        description="Monitor live XAUUSD execution data together with OMI analysis across M1, M5, M15, H1 and H4."
         icon={Gauge}
         actions={
           <>
-            <StatusBadge tone="success">
-              Tick data
-            </StatusBadge>
+            Tick Data
 
-            <StatusBadge tone="accent">
-              M1 / M5
+            <StatusBadge tone="info">
+              M1 → H4
             </StatusBadge>
           </>
         }
       />
 
       <div className="space-y-6">
+
         <MarketStatusDashboard />
 
         <MarketStatusDiagnostics />
+
       </div>
-    </div>
+    </>
   );
 }
