@@ -11,43 +11,6 @@ import {
 
 
 
-export interface ScientistOmiBrainExperience {
-  total: number;
-  good: number;
-  bad: number;
-  neutral: number;
-  latest_outcome: string | null;
-}
-
-
-export interface ScientistOmiBrainAdvisory {
-  mode: string;
-  authority: boolean;
-  current: string;
-}
-
-
-export interface ScientistOmiBrainNeural {
-  stage: string;
-  minimum_research_experiences: number;
-  usable_experiences: number;
-  data_ready: boolean;
-  dataset_version: string | null;
-  candidate_created: boolean;
-  model_trained: boolean;
-  execution_authority: boolean;
-  automatic_promotion: boolean;
-  pure_omi_champion_protected: boolean;
-}
-
-
-export interface ScientistOmiBrainIntelligence {
-  experience: ScientistOmiBrainExperience;
-  advisory: ScientistOmiBrainAdvisory;
-  neural: ScientistOmiBrainNeural;
-}
-
-
 export interface ScientistOmiBrainLearning {
   good: number;
   bad: number;
@@ -74,8 +37,6 @@ export interface ScientistOmiBrain {
   auto_execute: boolean;
 
   learning: ScientistOmiBrainLearning;
-
-  intelligence?: ScientistOmiBrainIntelligence;
 }
 
 

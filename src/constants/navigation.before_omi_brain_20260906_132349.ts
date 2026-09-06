@@ -173,15 +173,6 @@ export const navigationGroups: NavigationGroup[] = [
 
     items: [
       {
-        label: "OMI Brain",
-        href: "/scientist/omi-brain",
-        icon: BrainCircuit,
-        roles: [
-          "DEVELOPER",
-        ],
-      },
-
-      {
         label: "Scientist Console",
         href: "/developer",
         icon: Code2,
