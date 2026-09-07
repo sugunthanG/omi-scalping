@@ -155,211 +155,43 @@ function NetworkLines({
   from,
   to,
   active,
-  layer,
 }: {
   from: BrainNode[];
   to: BrainNode[];
   active: boolean;
-  layer: number;
 }) {
-
   return (
     <>
-
       {from.flatMap(
         (source, sourceIndex) =>
           to.map(
-            (target, targetIndex) => {
-
-              const connectionIndex =
-                sourceIndex * to.length
-                + targetIndex;
-
-              const pathId =
-                `omi-neural-${layer}-${sourceIndex}-${targetIndex}`;
-
-              const phase =
-                (
-                  connectionIndex * 0.071
-                  + layer * 0.13
-                ) % 0.9;
-
-              const fastDuration =
-                0.42
-                + (
-                  (
-                    connectionIndex
-                    + layer
-                  ) % 5
-                ) * 0.055;
-
-              const slowDuration =
-                0.75
-                + (
-                  (
-                    connectionIndex
-                    + layer * 2
-                  ) % 6
-                ) * 0.07;
-
-              return (
-                <g key={pathId}>
-
-                  {/* Permanent neural synapse */}
-                  <line
-                    x1={source.x}
-                    y1={source.y}
-                    x2={target.x}
-                    y2={target.y}
-                    stroke="currentColor"
-                    strokeWidth="0.7"
-                    className={
-                      active
-                        ? "text-amber-500/15"
-                        : "text-slate-800/70"
-                    }
-                  />
-
-
-                  {/* Fast electrical dash */}
-                  {active && (
-                    <line
-                      x1={source.x}
-                      y1={source.y}
-                      x2={target.x}
-                      y2={target.y}
-                      stroke="currentColor"
-                      strokeWidth={
-                        connectionIndex % 4 === 0
-                          ? "1.5"
-                          : "0.9"
-                      }
-                      strokeDasharray={
-                        connectionIndex % 3 === 0
-                          ? "3 17"
-                          : "2 21"
-                      }
-                      strokeLinecap="round"
-                      className={
-                        connectionIndex % 5 === 0
-                          ? "text-yellow-200/80"
-                          : "text-amber-400/55"
-                      }
-                    >
-
-                      <animate
-                        attributeName="stroke-dashoffset"
-                        from="24"
-                        to="0"
-                        dur={`${fastDuration}s`}
-                        begin={`-${phase}s`}
-                        repeatCount="indefinite"
-                      />
-
-                      <animate
-                        attributeName="opacity"
-                        values="0.15;0.95;0.25;0.7;0.15"
-                        dur={`${slowDuration}s`}
-                        begin={`-${phase}s`}
-                        repeatCount="indefinite"
-                      />
-
-                    </line>
-                  )}
-
-
-                  {/* Travelling neural impulse */}
-                  {active
-                    && connectionIndex % 2 === 0
-                    && (
-                      <circle
-                        r={
-                          connectionIndex % 6 === 0
-                            ? "2.8"
-                            : "1.8"
-                        }
-                        className={
-                          connectionIndex % 6 === 0
-                            ? "fill-yellow-200"
-                            : "fill-amber-400"
-                        }
-                      >
-
-                        <animate
-                          attributeName="cx"
-                          from={String(source.x)}
-                          to={String(target.x)}
-                          dur={`${fastDuration + 0.16}s`}
-                          begin={`-${phase}s`}
-                          repeatCount="indefinite"
-                        />
-
-                        <animate
-                          attributeName="cy"
-                          from={String(source.y)}
-                          to={String(target.y)}
-                          dur={`${fastDuration + 0.16}s`}
-                          begin={`-${phase}s`}
-                          repeatCount="indefinite"
-                        />
-
-                        <animate
-                          attributeName="opacity"
-                          values="0;1;1;0"
-                          dur={`${fastDuration + 0.16}s`}
-                          begin={`-${phase}s`}
-                          repeatCount="indefinite"
-                        />
-
-                      </circle>
-                    )
-                  }
-
-
-                  {/* Secondary micro impulse */}
-                  {active
-                    && connectionIndex % 5 === 0
-                    && (
-                      <circle
-                        r="1.2"
-                        className="fill-sky-300"
-                      >
-
-                        <animate
-                          attributeName="cx"
-                          from={String(source.x)}
-                          to={String(target.x)}
-                          dur={`${slowDuration}s`}
-                          begin={`-${phase + 0.21}s`}
-                          repeatCount="indefinite"
-                        />
-
-                        <animate
-                          attributeName="cy"
-                          from={String(source.y)}
-                          to={String(target.y)}
-                          dur={`${slowDuration}s`}
-                          begin={`-${phase + 0.21}s`}
-                          repeatCount="indefinite"
-                        />
-
-                        <animate
-                          attributeName="opacity"
-                          values="0;0.9;0.9;0"
-                          dur={`${slowDuration}s`}
-                          begin={`-${phase + 0.21}s`}
-                          repeatCount="indefinite"
-                        />
-
-                      </circle>
-                    )
-                  }
-
-                </g>
-              );
-            }),
+            (target, targetIndex) => (
+              <line
+                key={`${sourceIndex}-${targetIndex}`}
+                x1={source.x}
+                y1={source.y}
+                x2={target.x}
+                y2={target.y}
+                stroke="currentColor"
+                strokeWidth={
+                  active
+                    ? "1.35"
+                    : "1"
+                }
+                strokeDasharray={
+                  active
+                    ? "7 10"
+                    : undefined
+                }
+                className={
+                  active
+                    ? "text-amber-400/45 animate-pulse"
+                    : "text-slate-700/60"
+                }
+              />
+            ),
+          ),
       )}
-
     </>
   );
 }
@@ -424,124 +256,20 @@ function NetworkNode({
 
   return (
     <g>
-
-      {(active || selected) && (
-        <>
-
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="20"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="0.8"
-            className={
-              selected
-                ? (
-                  selectedTone === "buy"
-                    ? "text-emerald-400/40"
-                    : selectedTone === "sell"
-                      ? "text-red-400/40"
-                      : "text-amber-400/40"
-                )
-                : "text-amber-400/30"
-            }
-          >
-            <animate
-              attributeName="r"
-              values="18;25;18"
-              dur="1.15s"
-              repeatCount="indefinite"
-            />
-
-            <animate
-              attributeName="opacity"
-              values="0.8;0;0.8"
-              dur="1.15s"
-              repeatCount="indefinite"
-            />
-          </circle>
-
-
-          <circle
-            cx={node.x}
-            cy={node.y}
-            r="14"
-            className={
-              selected
-                ? (
-                  selectedTone === "buy"
-                    ? "fill-emerald-400/10"
-                    : selectedTone === "sell"
-                      ? "fill-red-400/10"
-                      : "fill-amber-400/10"
-                )
-                : "fill-amber-400/10"
-            }
-          >
-            <animate
-              attributeName="r"
-              values="12;18;13"
-              dur="0.72s"
-              repeatCount="indefinite"
-            />
-          </circle>
-
-        </>
-      )}
-
-
       <circle
         cx={node.x}
         cy={node.y}
         r="17"
         className={outerClass}
         strokeWidth="2"
-      >
-        {(active || selected) && (
-          <animate
-            attributeName="stroke-width"
-            values="1.5;3;1.5"
-            dur="0.65s"
-            repeatCount="indefinite"
-          />
-        )}
-      </circle>
-
+      />
 
       <circle
         cx={node.x}
         cy={node.y}
         r="5"
         className={innerClass}
-      >
-        {(active || selected) && (
-          <animate
-            attributeName="r"
-            values="3.5;6.5;4;7;3.5"
-            dur="0.58s"
-            repeatCount="indefinite"
-          />
-        )}
-      </circle>
-
-
-      {(active || selected) && (
-        <circle
-          cx={node.x}
-          cy={node.y}
-          r="2"
-          className="fill-yellow-100"
-        >
-          <animate
-            attributeName="opacity"
-            values="0.15;1;0.25;0.8;0.15"
-            dur="0.38s"
-            repeatCount="indefinite"
-          />
-        </circle>
-      )}
-
+      />
     </g>
   );
 }
@@ -861,50 +589,22 @@ export function OmiBrainVisualizer() {
                 className="block h-auto w-full max-w-full"
               >
 
-                <defs>
-
-                  <filter
-                    id="omi-neural-glow"
-                    x="-100%"
-                    y="-100%"
-                    width="300%"
-                    height="300%"
-                  >
-                    <feGaussianBlur
-                      stdDeviation="2.4"
-                      result="blur"
-                    />
-
-                    <feMerge>
-                      <feMergeNode in="blur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-
-                </defs>
-
-
-                <g filter="url(#omi-neural-glow)">
-
                 <NetworkLines
                   from={inputNodes}
                   to={hiddenOne}
                   active={live}
-                  layer={1}
                 />
 
                 <NetworkLines
                   from={hiddenOne}
                   to={hiddenTwo}
                   active={live}
-                  layer={2}
                 />
 
                 <NetworkLines
                   from={hiddenTwo}
                   to={outputNodes}
                   active={live}
-                  layer={3}
                 />
 
 
@@ -939,9 +639,6 @@ export function OmiBrainVisualizer() {
                     />
                   ),
                 )}
-
-
-                </g>
 
 
                 {outputNodes.map(

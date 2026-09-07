@@ -41,97 +41,10 @@ export interface ScientistOmiBrainNeural {
 }
 
 
-
-export interface ScientistRawSignalResearch {
-  version: string;
-  mode: string;
-  stage: string;
-  research_only: boolean;
-  execution_authority: boolean;
-  automatic_promotion: boolean;
-  total_observations: number;
-  buy: number;
-  sell: number;
-  wait: number;
-  other: number;
-  latest_id: string | null;
-  latest_timestamp: string | null;
-  latest_direction: string | null;
-}
-
-export interface ScientistResearchContinuity {
-  state: string;
-  gap_threshold_seconds: number;
-  data_gap_detected: boolean;
-  chronology_reliable: boolean;
-}
-
-export interface ScientistCounterfactualOutcomes {
-  tp_direct: number;
-  sl_then_tp: number;
-  sl_direct: number;
-  no_follow_through: number;
-  chronology_unknown: number;
-}
-
-export interface ScientistCounterfactualResearch {
-  mode: string;
-  pending: number;
-  research_window: string;
-  horizon_seconds: number;
-  continuity: ScientistResearchContinuity;
-  outcomes: ScientistCounterfactualOutcomes;
-  training_eligible: number;
-  training_excluded: number;
-  execution_authority: boolean;
-  production_changed: boolean;
-}
-
-export interface ScientistFailureImprovement {
-  mode: string;
-  total_diagnoses: number;
-  timing_failures: number;
-  direction_reversals: number;
-  direct_failures: number;
-  no_follow_through: number;
-  improvement_hypotheses: number;
-  latest_diagnosis: string | null;
-  latest_hypothesis: string | null;
-  causal_claims: boolean;
-  automatic_apply: boolean;
-  execution_authority: boolean;
-  scientist_approval_required: boolean;
-}
-
-export interface ScientistContinuousLearning {
-  mode: string;
-  research_goal_per_day: number;
-  profitable_target_per_day: number;
-  target_achieved: boolean;
-  generation: number;
-  stage: string;
-  eligible_samples: number;
-  excluded_samples: number;
-  candidate_status: string | null;
-  candidate_decision: string | null;
-  validation_available: boolean;
-  validation_metrics: Record<string, unknown> | null;
-  execution_authority: boolean;
-  automatic_promotion: boolean;
-  scientist_approval_required: boolean;
-  pure_omi_champion_protected: boolean;
-  continuity_exclusion_enforced: boolean;
-  chronology_unknown_training: boolean;
-}
-
 export interface ScientistOmiBrainIntelligence {
   experience: ScientistOmiBrainExperience;
   advisory: ScientistOmiBrainAdvisory;
   neural: ScientistOmiBrainNeural;
-  raw_signal_research?: ScientistRawSignalResearch;
-  counterfactual_research?: ScientistCounterfactualResearch;
-  failure_improvement?: ScientistFailureImprovement;
-  continuous_learning?: ScientistContinuousLearning;
 }
 
 

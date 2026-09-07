@@ -182,15 +182,6 @@ export const navigationGroups: NavigationGroup[] = [
       },
 
       {
-        label: "Session Filter",
-        href: "/scientist/session-filter",
-        icon: SlidersHorizontal,
-        roles: [
-          "DEVELOPER",
-        ],
-      },
-
-      {
         label: "Scientist Console",
         href: "/developer",
         icon: Code2,

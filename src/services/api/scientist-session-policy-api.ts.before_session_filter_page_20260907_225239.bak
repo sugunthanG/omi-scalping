@@ -1,0 +1,149 @@
+import axios from "axios";
+
+import {
+  API_BASE_URL,
+} from "@/lib/api-config";
+
+import {
+  getAccessToken,
+} from "@/lib/auth-token-storage";
+
+
+function getSessionPolicyAuthorizationHeaders() {
+  const token =
+    getAccessToken();
+
+  if (!token) {
+    throw new Error(
+      "Scientist access token is unavailable.",
+    );
+  }
+
+  return {
+    Authorization:
+      `Bearer ${token}`,
+
+    Accept:
+      "application/json",
+
+    "Content-Type":
+      "application/json",
+  };
+}
+
+
+const scientistSessionPolicyApi =
+  axios.create({
+    baseURL:
+      API_BASE_URL,
+
+    timeout:
+      15_000,
+  });
+
+
+scientistSessionPolicyApi.interceptors.request.use(
+  (config) => {
+    const headers =
+      getSessionPolicyAuthorizationHeaders();
+
+    config.headers.set(
+      "Authorization",
+      headers.Authorization,
+    );
+
+    config.headers.set(
+      "Accept",
+      headers.Accept,
+    );
+
+    config.headers.set(
+      "Content-Type",
+      headers["Content-Type"],
+    );
+
+    return config;
+  },
+);
+
+
+export type OmiQuality =
+  | "GOOD"
+  | "STRONG"
+  | "ELITE";
+
+export interface SessionPolicyResponse {
+  status?: string;
+  data?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+
+export interface SessionPolicyUpdatePayload {
+  password: string;
+  reason?: string | null;
+  session?: string;
+  quality?: OmiQuality;
+  allowed?: boolean;
+  entry_limit?: number | null;
+  [key: string]: unknown;
+}
+
+export interface SessionPolicyResetPayload {
+  password: string;
+  verification_number: string;
+  reason?: string | null;
+}
+
+export async function getScientistSessionPolicy() {
+  const response = await scientistSessionPolicyApi.get(
+    "/scientist/session-policy",
+  );
+
+  return response.data;
+}
+
+export async function getScientistSessionPolicyStatus() {
+  const response = await scientistSessionPolicyApi.get(
+    "/scientist/session-policy/status",
+  );
+
+  return response.data;
+}
+
+export async function getScientistNeuralSessionAdvisor() {
+  const response = await scientistSessionPolicyApi.get(
+    "/scientist/session-policy/neural-advisor",
+  );
+
+  return response.data;
+}
+
+export async function getScientistSessionPolicyAudit() {
+  const response = await scientistSessionPolicyApi.get(
+    "/scientist/session-policy/audit",
+  );
+
+  return response.data;
+}
+
+export async function updateScientistSessionPolicy(
+  payload: SessionPolicyUpdatePayload,
+) {
+  const response = await scientistSessionPolicyApi.post(
+    "/scientist/session-policy/update",
+    payload,
+  );
+
+  return response.data;
+}
+
+export async function resetScientistSessionPolicy(
+  payload: SessionPolicyResetPayload,
+) {
+  const response = await scientistSessionPolicyApi.post(
+    "/scientist/session-policy/reset",
+    payload,
+  );
+
+  return response.data;
+}
